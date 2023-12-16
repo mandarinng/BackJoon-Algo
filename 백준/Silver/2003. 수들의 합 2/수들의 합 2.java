@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 
+//투포인터
 public class Main {
 
 	public static void main(String[] args) throws Exception {
@@ -17,14 +18,18 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			arr[i] = Integer.parseInt(st.nextToken());
 		}
-
-		for (int i = 0; i < N; i++) {
-			int sum = 0;
-			for (int j = i; j < N; j++) {
-				sum += arr[j];
-				if (sum == M) result++;
-				else if(sum > M) break;
+		
+		int sum=0;
+		int end=0;
+		for(int start=0; start<N; start++) {
+			while(end<N && sum<M) {
+				sum += arr[end];
+				end++;
 			}
+			
+			if(sum == M) result++;
+			
+			sum -= arr[start];
 		}
 		
 		System.out.println(result);
