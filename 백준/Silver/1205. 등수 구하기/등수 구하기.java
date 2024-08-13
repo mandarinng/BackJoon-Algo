@@ -1,33 +1,57 @@
-import java.io.*;
+//백준 1205 등수 구하기
 import java.util.*;
- 
+import java.io.*;
+
 public class Main {
-   public static void main(String[] args) throws IOException {
-      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      StringTokenizer st = new StringTokenizer(in.readLine());
- 
-      int N = Integer.parseInt(st.nextToken());
-      int taesoo = Integer.parseInt(st.nextToken());
-      int P = Integer.parseInt(st.nextToken());
- 
-      int[] score = new int[P];
-      if(N>0) {
-         st = new StringTokenizer(in.readLine());
-         for (int i = 0; i < N; i++) score[i] = Integer.parseInt(st.nextToken());
-      }
- 
-      Arrays.sort(score);
- 
-      if(P==N && score[0]>=taesoo){
-         System.out.println(-1);
-         return;
-      }
- 
-      int cnt = 1;
-      for(int i=P-1;i>=Math.max(0,P-N-1);i--){
-         if(score[i]>taesoo) cnt++;
-         else break;
-      }
-      System.out.println(cnt);
-   }
+
+	public static void main(String[] args) throws Exception {
+
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int N = Integer.parseInt(st.nextToken());
+		int[] score = new int[N];
+
+		int ts = Integer.parseInt(st.nextToken());// 태수 점수
+		int cnt = Integer.parseInt(st.nextToken());// 랭킹 리스트에 올라 갈 수 있는 점수의 개수
+
+		if (N == 0) {
+			System.out.println(1);
+			return;
+		}
+
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < N; i++) {
+			score[i] = Integer.parseInt(st.nextToken());
+		}
+
+		if(score.length == cnt && ts <= score[N-1]) {
+			System.out.println(-1);
+			return;
+		}
+		int rank = 1;
+
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < score.length; i++) {
+
+			if (score[i] > ts) {
+				rank++;
+			} else if (score[i] == ts) {
+				if (i + 1 >= cnt) {
+					sb.append(-1);
+					break;
+				} else {
+					sb.append(rank);
+					break;
+				}
+			} else {
+				sb.append(rank);
+				break;
+			}
+		}
+		if(sb.length() == 0) {
+			sb.append(rank);
+		}
+		System.out.println(sb.toString());
+	}
 }
