@@ -1,40 +1,45 @@
-import java.util.Scanner;
+//백준 16236 아기 상어
+import java.awt.Point;
+import java.io.*;
+import java.util.*;
 
 public class Main {
-	public static int N;
-	public static int M;
-	public static int[] result;
-	public static StringBuilder sb = new StringBuilder();
-
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+	static int n,m;
+	static int [] nums;
+//	static boolean [] visited;
+	static StringBuilder sb = new StringBuilder();
+	
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		
-		N = sc.nextInt();// 1~N까지의 자연수 중에
-		M = sc.nextInt();// M개를 중복없이 고른다.depth의 크기가 M인것.
-		result = new int[M];// M개의 개수를 골라서 골라진 애들만 뽑으면 되니까 M크기의 배열 생성
-
-		combination(0);
-		System.out.println(sb);
-
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		nums = new int [m];
+		
+//		visited = new boolean[n+1];
+		
+		permutation(0);
+		
+		System.out.println(sb.toString());
 	}
-
-	// 깊이가 M인 M개의 수를 뽑았을 때 재귀 끝남.
-	// 뽑히기 시작하는 수 start
-	public static void combination(int depth) {
-		// 기저파트
-		if (depth == M) {
-			for (int i = 0; i < M; i++) {
-				sb.append(result[i] + " ");
+	public static void permutation(int depth) {
+		if(depth == m) {
+			for(int i=0; i<m; i++) {
+				sb.append(nums[i]).append(" ");
 			}
 			sb.append("\n");
 			return;
 		}
-		// 재귀파트
-		// 1부터 N까지의 수 중에 출력할 수 선택하기
-		for (int i = 1; i <= N; i++) {
-			result[depth] = i;
-			combination(depth + 1);
+		
+		for(int i=1; i<n+1; i++) {
+//			if(!visited[i]) {
+//				visited[i] = true;
+				nums[depth] = i;
+				permutation(depth+1);
+//				visited[i] = false;
+//			}
 		}
-
 	}
+	
 }
