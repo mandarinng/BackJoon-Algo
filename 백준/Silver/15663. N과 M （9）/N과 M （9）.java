@@ -1,61 +1,60 @@
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Scanner;
+//백준 16236 아기 상어
+import java.awt.Point;
+import java.io.*;
+import java.util.*;
 
 public class Main {
+	static int n, m;
+	static int[] nums;
+	static int[] result;
+	static boolean[] visited;
+	static StringBuilder sb = new StringBuilder();
+	static Set<String> set = new HashSet<>();
 
-	public static int N;
-	public static int M;
-	public static int[] result;
-	public static StringBuilder sb = new StringBuilder();
-	public static int[] arr;
-	public static boolean[] visit;
-	public static HashSet<String> set = new HashSet<>();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		nums = new int[n];
+		result = new int[m];
 
-		N = sc.nextInt();
-		M = sc.nextInt();
-		arr = new int[N];
-		for (int i = 0; i < N; i++) {
-			arr[i] = sc.nextInt();
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			nums[i] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(arr);
-		visit = new boolean[N];
-		result = new int[M];
+		Arrays.sort(nums);
+		visited = new boolean[n];
+		
 
-		combination(0);
-		System.out.println(sb);
-
+		permutation(0);
+		
+		System.out.println(sb.toString());
 	}
 
-	public static void combination(int depth) {
-		//tmp라는 새로운 스트링빌더에 일단 넣기
+	public static void permutation( int depth) {
 		StringBuilder tmp = new StringBuilder();
-		if (depth == M) {
-			for (int i = 0; i < M; i++) {
-				tmp.append(result[i] + " ");
+		if(depth == m) {
+			for(int i=0; i<m; i++) {
+//				sb.append(result[i]).append(" ");
+				tmp.append(result[i]).append(" ");
 			}
-			// 출력해야하는 숫자가 한 자릿수가 아닐 수 있으므로 string형 사용
-			String str = tmp.toString();
-			//hashset을 이용하면contains 를 사용해 이미 그 값이 들어있었는지 확인할 수 있음
-			//-> hashset은 중복 허용x
-			if(!set.contains(str)) {
-				set.add(str);//중복되지 않은 값이면 set에 넣기
-				//중복되지 않은 값인게 확인된 수만 출력할 스트링빌더sb에 넣어주기
-				sb.append(tmp).append("\n");
+			
+			String s = tmp.toString();
+			if(!set.contains(s)) {
+				set.add(s);
+				sb.append(s).append("\n");
 			}
 			return;
 		}
-		for (int i = 0; i < N; i++) {
-
-			if (!visit[i]) {
-				result[depth] = arr[i];
-				visit[i] = true;
-				combination(depth + 1);
-				visit[i] = false;
-
+		
+		for(int i=0; i<n; i++) {
+			if(!visited[i]) {
+				visited[i] = true;
+				result[depth] = nums[i];
+				permutation(depth+1);
+				visited[i] = false;
 			}
 		}
 	}
