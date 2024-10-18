@@ -1,46 +1,52 @@
-import java.util.Arrays;
-import java.util.Scanner;
+//백준 16236 아기 상어
+import java.awt.Point;
+import java.io.*;
+import java.util.*;
 
 public class Main {
+	static int n, m;
+	static int[] nums;
+	static int[] result;
+	static boolean[] visited;
+	static StringBuilder sb = new StringBuilder();
 
-	public static int N;
-	public static int M;
-	public static int [] result;
-	public static StringBuilder sb = new StringBuilder();
-	public static int [] arr;
-	public static boolean [] visit;
-	
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		N = sc.nextInt();
-		M = sc.nextInt();
-		arr = new int[N];
-		for(int i=0; i<N; i++) {
-			arr[i] = sc.nextInt();
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		nums = new int[n];
+		result = new int[m];
+
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			nums[i] = Integer.parseInt(st.nextToken());
 		}
-		Arrays.sort(arr);
-		visit = new boolean[N];
-		result = new int[M];
+		Arrays.sort(nums);
+		visited = new boolean[n];
 		
-		combination(0);
-		System.out.println(sb);
+
+		permutation(0);
+
+		System.out.println(sb.toString());
 	}
-	public static void combination(int depth) {
-		if(depth==M) {
-			for(int i=0; i<M; i++) {
-				sb.append(result[i]+" ");
+
+	public static void permutation(int depth) {
+		if(depth == m) {
+			for(int i=0; i<m; i++) {
+				sb.append(result[i]).append(" ");
 			}
 			sb.append("\n");
 			return;
 		}
 		
-		for(int i=0; i<N; i++) {
-			if(!visit[i]) {
-			result[depth] = arr[i];
-			visit[i] = true;
-			combination(depth+1);
-			visit[i] = false;
+		for(int i=0; i<n; i++) {
+			if(!visited[i]) {
+				visited[i] = true;
+				result[depth] = nums[i];
+				permutation(depth+1);
+				visited[i] = false;
 			}
 		}
 	}
