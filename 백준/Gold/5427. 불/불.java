@@ -17,7 +17,6 @@ public class Main {
 	static int r,c;
 	static boolean[][] visited;
 	static int [] start;
-//	static int firer, firec;
 	static List<Point> fires;
 	static int sec;
 	static boolean flag;
@@ -72,9 +71,7 @@ public class Main {
 			//불 먼저 전파 : 벽만 아니면 계속 전파하기
 			int qSize = fire.size();
 			while(qSize-- > 0) {
-//				System.out.println("111111111");
 				Point p = fire.poll(); //불 위치
-//				System.out.println(p.x+" "+p.y);
 				for(int d=0; d<4; d++) {
 					int nr = dr[d] + p.x;
 					int nc = dc[d] + p.y;
@@ -97,7 +94,6 @@ public class Main {
 			while(qsize-- >  0) {
 				//상근이 이동
 				SG location = sg.poll(); //상근이 현 위치
-//				System.out.println(location.row+" "+location.col+" "+location.time);
 				for(int d=0; d<4; d++) {
 					int nr = dr[d] + location.row;
 					int nc = dc[d] + location.col;
@@ -117,7 +113,6 @@ public class Main {
 				}
 			}
 //			print();
-			//1초 경과.
 		}
 	}
 	public static void print() {
