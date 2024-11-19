@@ -32,46 +32,44 @@ public class Main {
 		for (int i = 1; i <= n; i++) {
 			Arrays.fill(visited, false);
 			scores[i] = bfs(i);
-			if(scores[i] != Integer.MAX_VALUE) {
+			if (scores[i] != Integer.MAX_VALUE) {
 				minScore = Math.min(minScore, scores[i]);
 			}
 		}
 		ArrayList<Integer> candidate = new ArrayList<>();
-		for(int i=1; i<=n; i++) {
-			if(scores[i] == minScore) {
+		for (int i = 1; i <= n; i++) {
+			if (scores[i] == minScore) {
 				candidate.add(i);
 			}
 		}
 		sb.append(minScore).append(" ").append(candidate.size()).append("\n");
-		for(int i=0; i<candidate.size(); i++) {
+		for (int i = 0; i < candidate.size(); i++) {
 			sb.append(candidate.get(i)).append(" ");
 		}
-		System.out.println(sb.toString());		
+		System.out.println(sb.toString());
 	}
 	public static int bfs(int curr) {
 		Queue<Integer> queue = new LinkedList<>();
 		visited[curr] = true;
 		queue.add(curr);
 		int cnt = n - 1;
-		int [] dist = new int[n+1];
-		dist[curr] = 0;
+		int score = 0;
 		while (!queue.isEmpty()) {
-			int p = queue.poll();
-			for (int n : graph.get(p)) {
-				if (!visited[n]) {
-					visited[n] = true;
-					queue.add(n);
-					cnt--;
-					dist[n] = dist[p]+1;
+			score++;
+			int size = queue.size();
+			while (size-- > 0) {
+				int p = queue.poll();
+				for (int n : graph.get(p)) {
+					if (!visited[n]) {
+						visited[n] = true;
+						queue.add(n);
+						cnt--;
+					}
 				}
 			}
 		}
-		int maxDist = 0;
 		if (cnt == 0) { // 다 이어졌을 때
-			for(int i=1; i<=n; i++) {
-				maxDist = Math.max(maxDist, dist[i]);
-			}
-			return maxDist;
+			return score-1; // 마지막 증가된 score 조정
 		} else { // 다 안이어졌을 때
 			return Integer.MAX_VALUE;
 		}
